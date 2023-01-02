@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        XSOverlay Youtube - youtube.com
+// @description Shows your youtube currently playing in XSOverlay
+// @author      Phaze#6193
 // @namespace   Violentmonkey Scripts
 // @match       https://www.youtube.com/watch
 // @grant       none
 // @version     1.0
-// @author      Phaze#6193
-// @description 02/01/2023, 15:18:26
 // ==/UserScript==
 
 setInterval(() => {
