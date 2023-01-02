@@ -9,5 +9,5 @@
 // ==/UserScript==
 
 setInterval(() => {
-    fetch('http://localhost:8053?'+document.querySelector('h1.ytd-watch-metadata').innerText)
+    fetch('http://localhost:8053?'+document.querySelector('h1.ytd-watch-metadata').innerText);
 }, 2500)
