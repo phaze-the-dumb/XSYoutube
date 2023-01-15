@@ -4,6 +4,7 @@ const http = require('http');
 let notifier = new XSNotifier();
 let prevSong = '';
 let newSongNotifs = false;
+let vrcSupport = false
 
 http.createServer((req, res) => {
     let text = decodeURIComponent(req.url.split('/?')[1]);
@@ -12,9 +13,11 @@ http.createServer((req, res) => {
     if(prevSong !== text){
         prevSong = text;
 
-        client.send('/chatbox/input', [ '♫ ' + prevSong.split('(')[0].split('[')[0].trim(), true ], () => {
-            console.log('Updated VRC');
-        });
+        if(vrcSupport){
+            client.send('/chatbox/input', [ '♫ ' + prevSong.split('(')[0].split('[')[0].trim(), true ], () => {
+                console.log('Updated VRC');
+            });
+        }
 
         notifier.SendNotification(new XSNotification({
             Title: text.split('(')[0].split('[')[0].trim(),
@@ -33,11 +36,13 @@ http.createServer((req, res) => {
 }).listen(8053);
 
 // vrc shit
-const { Client } = require('node-osc');
-const client = new Client('127.0.0.1', 9000);
+if(vrcSupport){
+    const { Client } = require('node-osc');
+    const client = new Client('127.0.0.1', 9000);
 
-setInterval(() => {
-    client.send('/chatbox/input', [ '♫ ' + prevSong.split('(')[0].split('[')[0].trim(), true ], () => {
-        console.log('Updated VRC');
-    });
-}, 10000);
+    setInterval(() => {
+        client.send('/chatbox/input', [ '♫ ' + prevSong.split('(')[0].split('[')[0].trim(), true ], () => {
+            console.log('Updated VRC');
+        });
+    }, 10000);
+}
