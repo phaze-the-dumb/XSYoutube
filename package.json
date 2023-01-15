@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "node-osc": "^8.0.6",
     "xsnotifier": "^0.5.1"
   }
 }
