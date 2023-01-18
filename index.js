@@ -1,10 +1,13 @@
 const { XSNotification, XSNotifier } = require('xsnotifier');
+const { Client } = require('node-osc');
 const http = require('http');
 
 let notifier = new XSNotifier();
 let prevSong = '';
 let newSongNotifs = false;
-let vrcSupport = false
+let vrcSupport = false;
+
+const client = new Client('127.0.0.1', 9000);
 
 http.createServer((req, res) => {
     let text = decodeURIComponent(req.url.split('/?')[1]);
@@ -37,9 +40,6 @@ http.createServer((req, res) => {
 
 // vrc shit
 if(vrcSupport){
-    const { Client } = require('node-osc');
-    const client = new Client('127.0.0.1', 9000);
-
     setInterval(() => {
         client.send('/chatbox/input', [ '♫ ' + prevSong.split('(')[0].split('[')[0].trim(), true ], () => {
             console.log('Updated VRC');
